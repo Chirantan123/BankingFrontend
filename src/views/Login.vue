@@ -16,7 +16,7 @@ export default {
 <style>
 body {
  text-align: center;
- background-color:blue;
+ background-color:lightblue;
 }
 form {
  margin-top:100px;
@@ -39,7 +39,7 @@ form {
  height:200px;
  width: 40%;
  background-color:white;
- border:5px solid blue;
+ border:5px lightblue;
 }
 
 </style>

@@ -37,6 +37,6 @@ export default {
 .button {
   margin-top:10px;
   margin-left:40px;
-  background-color:blue;
+  background-color:lightblue;
 }
 </style>
