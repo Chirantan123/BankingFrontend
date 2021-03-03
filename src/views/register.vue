@@ -1,14 +1,15 @@
 <template>
  <div>
+   <navbar />
   <div class="container">
     <div class="container1">
     <label for="fname"><b>First Name</b></label>
-    <input type="text" id="name" placeholder="First Name" v-model="firstName" >
+    <input type="text" id="fname" placeholder="First Name" v-model="firstName" >
     <label for="lname"><b>Last Name</b></label>
-    <input type="text" id="name" placeholder="Last Name" v-model="lastName" >
+    <input type="text" id="lname" placeholder="Last Name" v-model="lastName" >
      </div>
     <label for="phone"><b>Phone Number</b></label>
-    <input type="text" v-model="phone_no"  value="+91" size="2"/>
+    <input type="text" v-model="phone_no"/>
     <label for="address"><b>Address</b></label>
     <textarea cols="80" rows="5" value="address" v-model="address"></textarea>
     <label for="email"><b>Email</b></label>
@@ -16,17 +17,20 @@
     <label for="psw"><b>Password</b></label>
     <input type="password" placeholder="Enter Password"  v-model="password" required>
     <label for="psw"><b>Confirm Password</b></label>
-    <input type="password" @keyup="mismatch" placeholder="Confirm Password" v-model="cpassword" required>
+    <input type="password" placeholder="Confirm Password" v-model="cpassword" required>
     <label for="pin"><b>Pin</b></label>
     <input type="text" id="pin" placeholder="Enter Secret Pin" v-model="pin" required>
     <div style="background-color:#f1f1f1">
     <button type="submit" class="submitbtn" @click="postData">Submit</button>
   </div>
   </div>
+  <Footer />
  </div>
 </template>
 
 <script>
+import footer from '@/components/footer.vue'
+import navbar from '@/components/navbar.vue'
 import axios from 'axios'
 export default {
   name: 'register',
@@ -43,6 +47,10 @@ export default {
       cpassword: ''
     }
   },
+  components: {
+    navbar: navbar,
+    Footer: footer
+  },
   methods: {
     validate () {
       if (this.firstName === '') {
@@ -57,7 +65,7 @@ export default {
         alert('Email cann\'t be Empty')
         return 0
       }
-      if (isNaN(this.phoneNumber) || this.phoneNumber === '' || this.phoneNumber.length !== 10) {
+      if (isNaN(this.phone_no) || this.phone_no === '' || this.phone_no.length !== 10) {
         alert('Invalid Phone number, must be 10 digits')
         return 0
       }
@@ -76,7 +84,7 @@ export default {
         firstName: this.firstName,
         lastName: this.lastName,
         email: this.email,
-        phoneNumber: this.phoneNumber,
+        phone_no: this.phone_no,
         password: this.password,
         address: this.address,
         pin: this.pin

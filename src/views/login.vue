@@ -1,5 +1,6 @@
 <template>
 <div class="main">
+  <navbar />
   <div class="container">
     <label for="uname"><b>Email</b></label><br>
     <input type="email" placeholder="Enter Username" v-model="email" >
@@ -10,18 +11,26 @@
     <button type="submit" class="submitbtn" @click="doLogin" >Submit</button>
   </div>
   </div>
+  <Footer />
 </div>
 </template>
 
 <script>
+import footer from '@/components/footer.vue'
+import navbar from '@/components/navbar.vue'
 import axios from 'axios'
 export default {
   name: 'login',
   data () {
     return {
       email: '',
-      password: ''
+      password: '',
+      message: ''
     }
+  },
+  components: {
+    navbar: navbar,
+    Footer: footer
   },
   methods: {
     validate () {
@@ -43,13 +52,26 @@ export default {
         password: this.password
       }
       if (this.validate()) {
-        localStorage.setItem('email', this.email)
-        this.$router.push('/welcome')
+        // localStorage.setItem('email', this.email)
         console.log('Redirect')
         axios.post('http://10.177.68.51:8080/user/login', obj).then((result) => {
           console.log(result)
-          localStorage.setItem('email', this.email)
+          if (result.data.message === 'Success') {
+            console.log('Success')
+            localStorage.setItem('user_id', result.data.id)
+            alert('You are successfully logged in')
+            this.$router.push('/welcome')
+          } else if (result.data.message === 'Incorrect password') {
+            alert('Incorrect password')
+          } else {
+            alert('User does not exist')
+          }
+          localStorage.setItem('id', result.data.id)
         })
+        // eslint-disable-next-line handle-callback-err
+          .catch((error) => {
+            console.log(error)
+          })
       }
     }
   }
@@ -90,7 +112,7 @@ form {
  padding: 20px;
  background-color: white;
 } */
-form {
+/* form {
   text-align: center;
   border: 10px solid #f1f1f1;
   width: 50%;
@@ -98,7 +120,7 @@ form {
   justify-content: center;
   margin-top:140px;
   margin-left:350px;
-}
+} */
 input[type=text], input[type=password],input[type=email] {
   width: 50%;
   padding: 12px 20px;

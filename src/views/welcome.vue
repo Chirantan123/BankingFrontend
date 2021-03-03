@@ -1,5 +1,6 @@
 <template>
 <div>
+    <navbar />
     <div class="msg">
     <h1>Welcome</h1>
     <h1>{{email}}</h1>
@@ -21,43 +22,49 @@
  <button>Admin</button>
  </div>
 </div>
+<Footer />
 </div>
 </template>
 <script>
 // import axios from 'axios'
+import navbar from '@/components/navbar.vue'
+import footer from '@/components/footer.vue'
 export default {
   data () {
     return {
-      email: ' '
+      id: ''
     }
   },
+  components: {
+    navbar: navbar,
+    Footer: footer
+  },
   mounted () {
-    // const ob = {
-    // this.email: localStorage.getItem('email')
-    // }
-    this.email = localStorage.getItem('email')
+    this.id = localStorage.getItem('user_id')
+    // this.email = localStorage.getItem('email')
     // axios.get('http://10.177.68.51:9090/login-as-admin ', ob)
     // .then((res) => {
     // this.id = res.data.email
     // })
+    console.log(this.id)
   }
 }
 </script>
 <style>
 .flex-container {
-    margin-top:100px;
+    margin-top:40px;
  display: flex;
  flex-direction: row;
- max-height:600px;
- background-color: DodgerBlue;
+ max-height:500px;
+ background-color: #31708E;
 }
 .flex-container > div {
  background-color: #f1f1f1;
  height:300px;
- width:400px;
- margin: 10px;
- margin-bottom:10px;
- padding: 20px;
+ width:300px;
+ margin: 30px;
+ margin-bottom:30px;
+ padding: 30px;
  font-size: 30px;
 }
 .msg {

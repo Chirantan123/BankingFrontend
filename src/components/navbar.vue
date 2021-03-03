@@ -1,9 +1,9 @@
 <template>
 <div>
     <nav class="navbar">
-    <button class="buttons" id="b1"><router-link class="links" to="/">Home</router-link></button>
-    <button class="buttons" id="b2"><router-link class="links" to="/login">Login</router-link></button>
-    <button class="buttons" id="b3"><router-link class="links" to="/register">Register</router-link></button>
+    <router-link class="links" to="/" tag="button">Home</router-link>
+    <router-link class="links" to="/login" tag="button">Login</router-link>
+    <router-link class="links" to="/register" tag="button">Register</router-link>
   </nav>
 </div>
 </template>
@@ -28,7 +28,6 @@ export default {
   color: white;
 }
 .buttons {
-  transition-duration: 0.4s;
   border-radius: 12px;
   border: none;
   color: white;
