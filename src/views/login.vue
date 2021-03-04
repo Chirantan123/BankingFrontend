@@ -54,7 +54,7 @@ export default {
       if (this.validate()) {
         // localStorage.setItem('email', this.email)
         console.log('Redirect')
-        axios.post('http://10.177.68.51:8080/user/login', obj).then((result) => {
+        axios.post('http://10.177.68.51:8081/user/login', obj).then((result) => {
           console.log(result)
           if (result.data.message === 'Success') {
             console.log('Success')

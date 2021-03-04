@@ -2,26 +2,27 @@
 <div>
     <navbar />
     <div class="msg">
-    <h1>Welcome</h1>
-    <h1>{{email}}</h1>
+    <h1>Welcome </h1>
+    <h1>{{id}}</h1>
     </div>
  <div class="flex-container">
  <div>
- <button>Deposit</button>
+ <button v-on:click="deposit">Deposit</button>
  </div>
  <div>
- <button>Tranfer</button>
+ <button  v-on:click="transfer">Tranfer</button>
  </div>
  <div>
- <button>Transaction</button>
+ <button  v-on:click="withdrawal">Withdraw</button>
  </div>
  <div>
- <button>Past Transactions</button>
+ <button  v-on:click="past_transaction">Past Transactions</button>
  </div>
  <div>
- <button>Admin</button>
+ <button  v-on:click="account">Account Details</button>
  </div>
 </div>
+<button class="submitbtn" v-on:click="createAccount">Create an Account</button>
 <Footer />
 </div>
 </template>
@@ -29,10 +30,14 @@
 // import axios from 'axios'
 import navbar from '@/components/navbar.vue'
 import footer from '@/components/footer.vue'
+import axios from 'axios'
 export default {
+  name: 'welcome',
   data () {
     return {
-      id: ''
+      id: '',
+      uname: '',
+      pin: ''
     }
   },
   components: {
@@ -47,6 +52,39 @@ export default {
     // this.id = res.data.email
     // })
     console.log(this.id)
+  },
+  methods: {
+    deposit () {
+      this.$router.push('/deposit')
+    },
+    transfer () {
+      this.$router.push('/transfer')
+    },
+    withdrawal () {
+      this.$router.push('/withdraw')
+    },
+    past_transaction () {
+      this.$router.push('/transactiondetails')
+    },
+    account () {
+      this.$router.push('/accountdetails')
+    },
+    createAccount () {
+      this.pin = prompt('Please Enter your Pin')
+      parseInt(this.pin)
+      axios.get('http://10.177.68.42:8082/account/createAccount' + this.user_id, this.pin).then((result) => {
+        console.log(result)
+        //   localStorage.setItem('details', result.data)
+        this.results = result.data
+        alert('Account has been created' + '\n' + 'CurrentBalance' + this.results.accountBalance)
+      //   this.details = JSON.parse(localStorage.getItem('details'))
+      //   console.log('details fetched')
+      //   console.log(this.details)
+      })
+        .catch((error) => {
+          console.log(error)
+        })
+    }
   }
 }
 </script>
@@ -73,5 +111,10 @@ export default {
     height:100px;
     display:flex;
     align-content: center;
+}
+ .submitbtn {
+  width: auto;
+  padding: 10px 18px;
+  background-color: black;
 }
 </style>

@@ -90,7 +90,7 @@ export default {
         pin: this.pin
       }
       if (this.validate()) {
-        axios.post('http://10.177.68.51:8080/user/register', obj).then((result) => {
+        axios.post('http://10.177.68.51:8081/user/register', obj).then((result) => {
           console.log(result)
           this.$router.push('/login')
         })
