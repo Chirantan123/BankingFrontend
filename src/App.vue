@@ -14,7 +14,7 @@ export default {
 
 <style lang="scss">
 body {
-  background-image:url('https://image.freepik.com/free-photo/macro-shot-financial-concept_53876-14671.jpg');
+  background-image:url('https://image.freepik.com/free-photo/hand-putting-money-coin-into-piggy-bank-isolated-grey-background-property-investment-house-mortgage-financial-concept_207927-188.jpg');
   background-repeat: no-repeat;
   background-size: cover;
 }

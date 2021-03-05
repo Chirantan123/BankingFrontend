@@ -3,7 +3,7 @@
     <navbar />
     <div class="msg">
     <h1>Welcome </h1>
-    <h1>{{id}}</h1>
+    <!-- <h1>{{id}}</h1> -->
     </div>
  <div class="flex-container">
  <div>
@@ -71,8 +71,11 @@ export default {
     },
     createAccount () {
       this.pin = prompt('Please Enter your Pin')
-      parseInt(this.pin)
-      axios.get('http://10.177.68.42:8082/account/createAccount' + this.user_id, this.pin).then((result) => {
+      var obj = {
+        pin: this.pin
+      }
+      this.pin = parseInt(this.pin)
+      axios.post('http://10.177.68.42:8082/account/createAccount/' + this.id, obj).then((result) => {
         console.log(result)
         //   localStorage.setItem('details', result.data)
         this.results = result.data

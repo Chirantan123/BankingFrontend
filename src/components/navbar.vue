@@ -1,15 +1,32 @@
 <template>
 <div>
     <nav class="navbar">
-    <router-link class="links" to="/" tag="button">Home</router-link>
-    <router-link class="links" to="/login" tag="button">Login</router-link>
-    <router-link class="links" to="/register" tag="button">Register</router-link>
+    <span v-if="state !== null">
+    <button class="links" id="b3" @click="logout" tag="button">Logout</button>
+    </span>
+    <span v-else>
+    <router-link class="links" to="/" id="b1" tag="button">Home</router-link>
+    <router-link class="links" to="/login" id="b2" tag="button">Login</router-link>
+    <router-link class="links" to="/register" id="b3" tag="button">Register</router-link>
+    </span>
   </nav>
 </div>
 </template>
 
 <script>
 export default {
+  data () {
+    return {
+      state: localStorage.getItem('user_id')
+    }
+  },
+  methods: {
+    logout () {
+      console.log('Logout called')
+      localStorage.removeItem('user_id')
+      this.$router.push('/login')
+    }
+  }
 
 }
 </script>
@@ -22,8 +39,9 @@ export default {
     background-color:#8FC1E3;
     top:0;
     width: 100%;
+    left:0;
 }
-.buttons:hover {
+.links:hover {
   background-color:#31708E; /* Green */
   color: white;
 }
@@ -40,6 +58,16 @@ export default {
   cursor: pointer;
 }
 .links {
+  border-radius: 12px;
+  border: none;
+  color: white;
+  padding: 15px 32px;
+  text-align: center;
+  text-decoration: black;
+  display: inline-block;
+  font-size: 16px;
+  margin: 14px 12px;
+  cursor: pointer;
   text-align: center;
   text-decoration:none ;
   color:black;
@@ -58,4 +86,5 @@ export default {
   margin: 14px 10px;
   margin-left: 452px;
 }
+
 </style>

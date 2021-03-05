@@ -7,9 +7,9 @@
  <input type='text' v-model='amount' id='Amount'>
  <label for="To">Account No</label>
  <input type='text' v-model='accountNo' id='AccountNo'>
- <label for="From">Pin</label>
- <input type='password' v-model='pin' id='password'>
- <button type="submit" class="submitbtn" @click="doWithdraw">withdraw</button>
+ <!-- <label for="From">Pin</label>
+ <input type='password' v-model='pin' id='password'> -->
+ <button type="submit" class="submitbtn" @click="doWithdraw">Submit</button>
  </div>
  <Footer />
 </div>
@@ -38,7 +38,7 @@ export default {
     validate (r) {
       console.log(r)
       console.log('Validate called')
-      if (r.message === "Account Number doesn't Exist" || r.message === 'InSufficient Balance' || r.message === 'Invalid input for withdrawal amount!') {
+      if (r.message === 'Account Number does not Exist' || r.message === 'InSufficient Balance' || r.message === 'Invalid input for withdrawal amount!' || r.message === 'Invalid Pin') {
         console.log(r.message)
         return r.message
       } else {
@@ -46,46 +46,63 @@ export default {
       }
     },
     doWithdraw () {
-      const obj = {
-        pin: this.pin,
+      var obj = {
+        pin: '',
         accountNo: this.accountNo,
         amount: this.amount
       }
-      this.user_id = localStorage.getItem('user_id')
-      axios.put('http://10.177.68.42:8082/account/withdraw/' + this.user_id, obj)
-        .then((result) => {
-          console.log(result)
-          this.results = result.data
-          // validation of result
-          alert(this.validate(this.results))
-          console.log(this.validate(this.results))
-          // Show withdraw details,Success message and redirect to welcome page
-          this.$router.push('/welcome')
-          // Show that the account no to which money is being transferred does not exist and stay in the same page
+      if (this.amount === '') {
+        this.$alert('Enter the Amount')
+      } else if (this.accountNo === '') {
+        this.$alert('Enter Your Account Number')
+      } else {
+        this.$prompt('Input your Secret PIN', 'PIN', '', 'info', 'cancelme').then((text) => {
+        // do somthing with text
+          obj.pin = text
+          this.user_id = localStorage.getItem('user_id')
+          axios.put('http://10.177.68.42:8082/account/withdraw/' + this.user_id, obj)
+            .then((result) => {
+              console.log(result)
+              this.results = result.data
+              // validation of result
+              if (this.validate(this.results) === 'Success') {
+                this.$alert('Your current Balance is ' + this.results.currentBalance + '\n' + 'Your Transaction was Successful')
+                this.$router.push('/welcome')
+              } else {
+                this.$alert('Re Enter Your Details')
+                // Show that the account no to which money is being transferred does not exist and stay in the same page
+              }
 
-          // this.$router.push({ name: 'Welcome' })
-          // localStorage.setItem('email', this.posts.email)
+              // console.log(this.validate(this.results))
+              // Show withdraw details,Success message and redirect to welcome page
+              // Show that the account no to which money is being transferred does not exist and stay in the same page
+
+              // this.$router.push({ name: 'Welcome' })
+              // localStorage.setItem('email', this.posts.email)
+            })
+            .catch(e => console.log(e))
         })
-        .catch(e => console.log(e))
+      }
     }
   }
 }
 </script>
-<style>
+<style scoped>
 .container {
   border: 10px solid #f1f1f1;
-  width: 50%;
+  width: 30%;
   align-content: center;
   justify-items: center;
+  margin:auto;
   margin-top:140px;
-  margin-left:350px;
-  margin-bottom: 100px;
+  /* margin-left:350px;
+  margin-bottom: 100px; */
   padding: 16px;
   display:flex;
   flex-direction: column;
   justify-content: space-evenly;
   align-items: center;
-  color:red;
+  opacity:0.8;
 }
 input[type=text], input[type=password],input[type=email] {
   width: 50%;
@@ -101,6 +118,6 @@ button:hover {
 .submitbtn {
   width: auto;
   padding: 10px 18px;
-  background-color: #f44336;
+  background-color: #5085A5;
 }
 </style>

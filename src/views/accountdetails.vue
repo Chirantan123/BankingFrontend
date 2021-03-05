@@ -57,7 +57,7 @@ export default {
 <style>
 .container {
   border: 10px solid #f1f1f1;
-  width: 50%;
+  width: 40%;
   align-content: center;
   justify-items: center;
   margin-top:140px;
@@ -76,7 +76,7 @@ input[type=text], input[type=password],input[type=email] {
   padding: 12px 20px;
   margin: 8px 0;
   display: inline-block;
-  border: 1px solid #ccc;
+  border: 2px solid rgb(8, 8, 8);
   box-sizing: border-box;
 }
 button:hover {
@@ -85,7 +85,7 @@ button:hover {
 .submitbtn {
   width: auto;
   padding: 10px 18px;
-  background-color: #f44336;
+  background-color: #5085A5;
 }
 table {
   font-family: arial, sans-serif;

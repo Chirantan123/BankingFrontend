@@ -9,8 +9,8 @@
         <input type='text' v-model='senderAccount' id='SenderAccountNo'>
         <label for="Receiver">Receiver Account No</label>
         <input type='text' v-model='recipientAccount' id='ReceiverAccountNo'>
-        <label for="Pin">Pin</label>
-        <input type='password' v-model='pin' id='pin'>
+        <!-- <label for="Pin">Pin</label>
+        <input type='password' v-model='pin' id='pin'> -->
         <button type="submit" class="submitbtn" @click="doTransfer">Transfer</button>
         </div>
         <Footer />
@@ -27,10 +27,11 @@ export default {
     return {
       senderAccount: '',
       recipientAccount: '',
-      pin: '',
       amount: '',
-      results: [],
-      user_id: ''
+      pin2: '',
+      results: '',
+      user_id: '',
+      pin: ''
     }
   },
   components: {
@@ -39,46 +40,62 @@ export default {
   },
   methods: {
     validate (r) {
+      console.log(r)
       console.log('Validate called')
-      if (r.message === "Account Number doesn't exist") {
-        return 0
+      if (r === 'Sender account does not exist' || r === 'Recipient account does not exist' || r === 'Insufficient Balance' || r === 'Invalid input for transfer amount!' || r === 'Invalid pin') {
+        console.log(r)
+        return r
       } else {
-        return 1
+        return 'Success'
       }
     },
     doTransfer () {
-      const obj = {
-        pin: this.pin,
+      var obj = {
         senderAccount: this.senderAccount,
         recipientAccount: this.recipientAccount,
-        amount: this.amount
+        amount: this.amount,
+        pin: ''
         // user_id: localStorage.getItem('user_id')
       }
       this.user_id = localStorage.getItem('user_id')
-      if (this.senderAccount === this.recipientAccount) {
+      if (this.amount === '') {
+        this.$alert('Enter the Amount')
+      } else if (this.senderAccount === '') {
+        this.$alert('Enter Your Account Number')
+      } else if (this.recipientAccount === '') {
+        this.$alert('Enter Recipient Account Number')
+      } else if (this.senderAccount === this.recipientAccount) {
         console.log(true)
-        alert('Transaction can only be done betweeen different user accounts')
+        this.$alert('Transaction can only be done betweeen different user accounts')
         this.senderAccount = ''
         this.recipientAccount = ''
         // this.$router.push({ name: 'transfer' })
       } else {
         console.log(false)
-        axios.put('http://10.177.68.42:8082/transaction/transfer/' + this.user_id, obj)
-          .then((result) => {
-            console.log(result)
-            this.results = result.data
-            // validation of result
-            if (this.validate(result.data)) {
-            // Show withdraw details,Success message and redirect to welcome page
-              alert('Success')
-              this.$router.push({ name: 'welcome' })
-            } else {
-              alert('Reenter Sender and Receiver Account No')
-            // Show that the account no to which money is being transferred does not exist and stay in the same page
-            }
+        this.$prompt('Input your Secret PIN', 'PIN', '', 'info').then((text) => {
+        // do somthing with text
+          console.log('pinnn' + text)
+          obj.pin = text
+
+          axios.put('http://10.177.68.42:8082/transaction/transfer/' + this.user_id, obj)
+            .then((result) => {
+              this.results = result.data
+              console.log(result)
+              // validation of result
+              // console.log('testing phase', this.validate(result.data), this.validate(result.data) === 'Success')
+              if (this.validate(this.results) === 'Success') {
+                // Show withdraw details,Success message and redirect to welcome page
+                this.$alert('Success')
+                this.$router.push({ name: 'welcome' })
+              } else {
+                // console.log(this.results)
+                this.$alert('Re enter Sender and Receiver Account No')
+                // Show that the account no to which money is being transferred does not exist and stay in the same page
+              }
             // this.$router.push({ name: 'Welcome' })
             // localStorage.setItem('email', this.posts.email)
-          })
+            })
+        })
       }
     }
   }
@@ -86,7 +103,23 @@ export default {
 }
 </script>
 
-<style>
+<style scoped>
+.container {
+  border: 10px solid #f1f1f1;
+  width: 30%;
+  align-content: center;
+  justify-items: center;
+  margin:auto;
+  margin-top:140px;
+  /* margin-left:350px;
+  margin-bottom: 100px; */
+  padding: 16px;
+  display:flex;
+  flex-direction: column;
+  justify-content: space-evenly;
+  align-items: center;
+  opacity:0.8;
+}
 input[type=text], input[type=password],input[type=email] {
   width: 50%;
   padding: 12px 20px;
@@ -101,6 +134,6 @@ button:hover {
 .submitbtn {
   width: auto;
   padding: 10px 18px;
-  background-color: #f44336;
+  background-color: #5085A5;
 }
 </style>

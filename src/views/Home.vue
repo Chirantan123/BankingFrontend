@@ -3,6 +3,7 @@
     <navbar />
     <h1>This is homepage</h1>
     <Footer />
+    <!-- <sidebar /> -->
   </div>
 </template>
 

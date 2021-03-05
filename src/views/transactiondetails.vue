@@ -2,8 +2,10 @@
 <div class="main">
   <navbar />
     <div class="container">
+        <input type="text" v-model="search" placeholder ="Search"/>
       <table style="width:100%">
            <tr>
+               <th>Sr.No</th>
             <th>Id</th>
             <th>Date</th>
             <th>Sender's Account Number</th>
@@ -12,7 +14,11 @@
             <th>Status</th>
             <th>Type</th>
         </tr>
-        <tr v-for = 'res in results' :key="res.id">
+
+        <!-- // eslint-disable-next-line vue/no-use-v-if-with-v-for
+         v-if = 'index <= 20' -->
+        <tr v-for = '(res, index) in results' :key="res.id" >
+      <td>{{index +1}}</td>
       <td>{{res.user_id}}</td>
       <td>{{res.date}}</td>
       <td v-if= "res.myAccNo === null" >Null</td>
@@ -24,8 +30,9 @@
       <td>{{res.type}}</td>
       </tr>
       </table>
-      <Footer />
+      <button class="btn" @click="generatePdf">Generate Pdf </button>
   </div>
+   <Footer />
 </div>
 </template>
 
@@ -33,6 +40,7 @@
 import navbar from '@/components/navbar.vue'
 import footer from '@/components/footer.vue'
 import axios from 'axios'
+import jsPDF from 'jspdf'
 export default {
   name: 'transactiondetails',
   components: {
@@ -42,7 +50,9 @@ export default {
   data () {
     return {
       results: [],
-      user_id: ''
+      user_id: '',
+      pdf: '',
+      count: 0
     //   details: {
     //     userId: '',
     //     id: '',
@@ -67,6 +77,34 @@ export default {
       .catch((error) => {
         console.log(error)
       })
+  },
+  methods: {
+    generatePdf () {
+      var count = 1
+      var pdfName = 'transaction'
+      let pdf = ''
+      pdf = pdf + 'Sr.No' + ' ' + 'Id' + ' ' + 'Date' + ' ' + 'Sender Account Number' + ' ' + 'Reciever Account Number' + ' ' + 'Amount' + ' ' + 'Status' + ' ' + 'Type'
+      for (const i in this.results) {
+        const res = this.results[i]
+        pdf = pdf + count + '. ' + ' '
+        pdf = pdf + '    ' + res.user_id
+        pdf = pdf + '    ' + res.date
+        pdf = pdf + '    ' + res.myAccNo
+        pdf = pdf + '    ' + res.recipientAccNo
+        pdf = pdf + '    ' + res.amount
+        pdf = pdf + '    ' + res.status
+        pdf = pdf + '    ' + res.type
+        pdf = pdf + '    ' + '\n'
+        count++
+      }
+      // eslint-disable-next-line new-cap
+      var doc = new jsPDF()
+      doc.text(pdf, 10, 10)
+      doc.save(pdfName + '.pdf')
+    },
+    increaseCount () {
+      return this.count++
+    }
   }
 }
 </script>
@@ -86,7 +124,7 @@ export default {
   justify-content: space-evenly;
   align-items: center;
   color: black;
-  background-color: silver;
+  /* background-color: silver; */
 }
 table {
   font-family: arial, sans-serif;
@@ -98,5 +136,13 @@ td, th {
   border: 1px solid #dddddd;
   text-align: left;
   padding: 8px;
+}
+button:hover {
+  opacity: 0.8;
+}
+.btn {
+  width: auto;
+  padding: 10px 18px;
+  background-color: #5085A5;
 }
 </style>

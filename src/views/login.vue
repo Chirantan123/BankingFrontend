@@ -36,11 +36,11 @@ export default {
     validate () {
       console.log('Hello I m stuck')
       if (this.email === '') {
-        alert('Email cann\'t be Empty')
+        this.$alert('Email cannot be Empty')
         return 0
       }
       if (this.password === '') {
-        alert('Password cann\'t be Empty')
+        this.$alert('Password cannot be Empty')
         return 0
       }
       return 1
@@ -54,7 +54,7 @@ export default {
       if (this.validate()) {
         // localStorage.setItem('email', this.email)
         console.log('Redirect')
-        axios.post('http://10.177.68.51:8081/user/login', obj).then((result) => {
+        axios.post('http://10.177.68.59:8081/user/login', obj).then((result) => {
           console.log(result)
           if (result.data.message === 'Success') {
             console.log('Success')
@@ -66,7 +66,7 @@ export default {
           } else {
             alert('User does not exist')
           }
-          localStorage.setItem('id', result.data.id)
+          // localStorage.setItem('id', result.data.id)
         })
         // eslint-disable-next-line handle-callback-err
           .catch((error) => {
@@ -130,12 +130,12 @@ input[type=text], input[type=password],input[type=email] {
   box-sizing: border-box;
 }
 button:hover {
-  opacity: 0.6;
+  opacity: 0.8;
 }
 .submitbtn {
   width: auto;
   padding: 10px 18px;
-  background-color: #f44336;
+  background-color: #5085A5;
 }
 
 .container {
@@ -159,6 +159,7 @@ button:hover {
   flex-direction: column;
   justify-content: space-evenly;
   align-items: center;
+  opacity:0.7;
 }
 
 </style>

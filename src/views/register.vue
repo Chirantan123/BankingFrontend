@@ -18,8 +18,6 @@
     <input type="password" placeholder="Enter Password"  v-model="password" required>
     <label for="psw"><b>Confirm Password</b></label>
     <input type="password" placeholder="Confirm Password" v-model="cpassword" required>
-    <label for="pin"><b>Pin</b></label>
-    <input type="text" id="pin" placeholder="Enter Secret Pin" v-model="pin" required>
     <div style="background-color:#f1f1f1">
     <button type="submit" class="submitbtn" @click="postData">Submit</button>
   </div>
@@ -43,7 +41,6 @@ export default {
       address: '',
       email: '',
       password: '',
-      pin: '',
       cpassword: ''
     }
   },
@@ -54,27 +51,26 @@ export default {
   methods: {
     validate () {
       if (this.firstName === '') {
-        alert('First Name cann\'t be Empty')
-        return 0
+        this.$alert('First Name cann\'t be Empt')
       }
       if (this.lastName === '') {
-        alert('Last Name cann\'t be Empty')
-        return 0
-      }
-      if (this.email === '') {
-        alert('Email cann\'t be Empty')
+        this.$alert('Last Name cann\'t be Empty')
         return 0
       }
       if (isNaN(this.phone_no) || this.phone_no === '' || this.phone_no.length !== 10) {
-        alert('Invalid Phone number, must be 10 digits')
+        this.$alert('Invalid Phone number, must be 10 digits')
+        return 0
+      }
+      if (this.email === '') {
+        this.$alert('Email cann\'t be Empty')
         return 0
       }
       if (this.password === '' || (this.password.length < 8 || this.password.length > 16)) {
-        alert('Invalid password, must be between than 8 to 16 characters')
+        this.$alert('Invalid password, must be between than 8 to 16 characters')
         return 0
       }
       if (this.password !== this.cpassword) {
-        alert('Password does not match')
+        this.$alert('Password does not match')
         return 0
       }
       return 1
@@ -86,8 +82,7 @@ export default {
         email: this.email,
         phone_no: this.phone_no,
         password: this.password,
-        address: this.address,
-        pin: this.pin
+        address: this.address
       }
       if (this.validate()) {
         axios.post('http://10.177.68.51:8081/user/register', obj).then((result) => {
@@ -117,6 +112,7 @@ input[type=text], input[type=password],textarea, input[type=email] {
   display: inline-block;
   border: 1px solid #ccc;
   box-sizing: border-box;
+  opacity:1;
 }
 #name {
     width: 20%;
@@ -132,11 +128,11 @@ button:hover {
 .submitbtn {
   width: auto;
   padding: 10px 18px;
-  background-color: #f44336;
+  background-color: #5085A5;
 }
 
 .container {
-  border: 10px solid #f1f1f1;
+  border: 5px solid #f1f1f1;
   width: 50%;
   align-content: center;
   justify-items: center;
@@ -148,6 +144,9 @@ button:hover {
   flex-direction: column;
   justify-content: space-evenly;
   align-items: center;
+  opacity:0.7;
+  /* background : rgba(0, 151, 19, 0.3); */
+
 }
 .container1 {
   padding: 16px;
@@ -155,5 +154,9 @@ button:hover {
   flex-direction: row;
   justify-content: space-evenly;
   align-items: center;
+  opacity: 2;
+}
+input[type="text"] {
+  margin-right: 12px;
 }
 </style>
