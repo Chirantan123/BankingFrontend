@@ -54,12 +54,13 @@ export default {
       if (this.validate()) {
         // localStorage.setItem('email', this.email)
         console.log('Redirect')
-        axios.post('http://10.177.68.59:8081/user/login', obj).then((result) => {
+        axios.post('http://10.177.68.59:8080/login', obj).then((result) => {
           console.log(result)
           if (result.data.message === 'Success') {
             console.log('Success')
-            localStorage.setItem('user_id', result.data.id)
-            alert('You are successfully logged in')
+            localStorage.setItem('jwt', result.data.jwt)
+            console.log(localStorage.getItem('jwt'))
+            this.$alert('You are successfully logged in')
             this.$router.push('/welcome')
           } else if (result.data.message === 'Incorrect password') {
             alert('Incorrect password')
@@ -160,6 +161,8 @@ button:hover {
   justify-content: space-evenly;
   align-items: center;
   opacity:0.7;
+  background-color: rgb(192, 175, 192);
+  border-radius: 10px;
 }
 
 </style>

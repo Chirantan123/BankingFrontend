@@ -1,6 +1,7 @@
 <template>
 <div class="main">
     <navbar />
+    <sidebar />
  <h1>Welcome to withdraw page</h1>
  <div class="container">
  <label for="Amount">Amount</label>
@@ -19,6 +20,7 @@
 import axios from 'axios'
 import footer from '@/components/footer.vue'
 import navbar from '@/components/navbar.vue'
+import sidebar from '@/components/sidebar.vue'
 export default {
   name: 'withdraw',
   data () {
@@ -32,7 +34,13 @@ export default {
   },
   components: {
     navbar: navbar,
-    Footer: footer
+    Footer: footer,
+    sidebar: sidebar
+  },
+  mounted () {
+    if (localStorage.getItem('user_id') === null) {
+      this.$router.push('/login')
+    }
   },
   methods: {
     validate (r) {
@@ -66,7 +74,7 @@ export default {
               this.results = result.data
               // validation of result
               if (this.validate(this.results) === 'Success') {
-                this.$alert('Your current Balance is ' + this.results.currentBalance + '\n' + 'Your Transaction was Successful')
+                this.$alert(' Your Transaction was Successful!! ' + '  Your current Balance is  ' + this.results.currentBalance + '\n')
                 this.$router.push('/welcome')
               } else {
                 this.$alert('Re Enter Your Details')
@@ -103,6 +111,8 @@ export default {
   justify-content: space-evenly;
   align-items: center;
   opacity:0.8;
+  background-color: rgb(192, 175, 192);
+  border-radius: 10px;
 }
 input[type=text], input[type=password],input[type=email] {
   width: 50%;

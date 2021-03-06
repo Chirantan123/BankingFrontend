@@ -85,7 +85,7 @@ export default {
         address: this.address
       }
       if (this.validate()) {
-        axios.post('http://10.177.68.51:8081/user/register', obj).then((result) => {
+        axios.post('http://10.177.68.59:8080/register', obj).then((result) => {
           console.log(result)
           this.$router.push('/login')
         })
@@ -144,7 +144,9 @@ button:hover {
   flex-direction: column;
   justify-content: space-evenly;
   align-items: center;
+  background-color: rgb(192, 175, 192);
   opacity:0.7;
+  border-radius: 10px;
   /* background : rgba(0, 151, 19, 0.3); */
 
 }

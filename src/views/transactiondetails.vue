@@ -1,6 +1,7 @@
 <template>
 <div class="main">
   <navbar />
+  <sidebar />
     <div class="container">
         <input type="text" v-model="search" placeholder ="Search"/>
       <table style="width:100%">
@@ -41,11 +42,13 @@ import navbar from '@/components/navbar.vue'
 import footer from '@/components/footer.vue'
 import axios from 'axios'
 import jsPDF from 'jspdf'
+import sidebar from '@/components/sidebar.vue'
 export default {
   name: 'transactiondetails',
   components: {
     navbar: navbar,
-    Footer: footer
+    Footer: footer,
+    sidebar: sidebar
   },
   data () {
     return {
@@ -65,6 +68,9 @@ export default {
     }
   },
   mounted () {
+    if (localStorage.getItem('user_id') === null) {
+      this.$router.push('/login')
+    }
     this.user_id = localStorage.getItem('user_id')
     axios.get('http://10.177.68.42:8082/transaction/pastTransaction/' + this.user_id).then((result) => {
       console.log(result)

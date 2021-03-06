@@ -3,6 +3,7 @@
     <nav class="navbar">
     <span v-if="state !== null">
     <button class="links" id="b3" @click="logout" tag="button">Logout</button>
+     <router-link class="links" to="/welcome" id="b1" tag="button">Home</router-link>
     </span>
     <span v-else>
     <router-link class="links" to="/" id="b1" tag="button">Home</router-link>

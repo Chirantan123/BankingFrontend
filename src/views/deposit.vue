@@ -1,6 +1,7 @@
 <template>
     <div class="main">
         <navbar />
+        <sidebar />
         <h1>Welcome to deposit page</h1>
         <div class="container">
         <label for="Amount">Amount</label>
@@ -20,6 +21,7 @@
 import navbar from '@/components/navbar.vue'
 import footer from '@/components/footer.vue'
 import axios from 'axios'
+import sidebar from '@/components/sidebar.vue'
 
 // // Get the modal
 // var modal = document.getElementById('myModal')
@@ -46,7 +48,6 @@ import axios from 'axios'
 //     modal.style.display = 'none'
 //   }
 // }
-
 export default {
   name: 'deposit',
   data () {
@@ -61,7 +62,13 @@ export default {
   },
   components: {
     navbar: navbar,
-    Footer: footer
+    Footer: footer,
+    sidebar: sidebar
+  },
+  mounted () {
+    if (localStorage.getItem('user_id') === null) {
+      this.$router.push('/login')
+    }
   },
   methods: {
     validate (r) {
@@ -132,6 +139,7 @@ export default {
   justify-content: space-evenly;
   align-items: center;
   opacity:0.8;
+  border-radius: 10px;
 }
 input[type=text], input[type=password],input[type=email] {
   width: 50%;
@@ -149,43 +157,4 @@ button:hover {
   padding: 10px 18px;
   background-color: #5085A5;
 }
-
-.modal {
-  display: none; /* Hidden by default */
-  position: fixed; /* Stay in place */
-  z-index: 1; /* Sit on top */
-  padding-top: 100px; /* Location of the box */
-  left: 0;
-  top: 0;
-  width: 100%; /* Full width */
-  height: 100%; /* Full height */
-  overflow: auto; /* Enable scroll if needed */
-  background-color: rgb(0,0,0); /* Fallback color */
-  background-color: rgba(0,0,0,0.4); /* Black w/ opacity */
-}
-
-/* Modal Content */
-.modal-content {
-  background-color: #fefefe;
-  margin: auto;
-  padding: 20px;
-  border: 1px solid #888;
-  width: 80%;
-}
-
-/* The Close Button */
-.close {
-  color: #aaaaaa;
-  float: right;
-  font-size: 28px;
-  font-weight: bold;
-}
-
-.close:hover,
-.close:focus {
-  color: #000;
-  text-decoration: none;
-  cursor: pointer;
-}
-
 </style>

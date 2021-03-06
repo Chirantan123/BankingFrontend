@@ -1,6 +1,7 @@
 <template>
   <div cass="main">
       <navbar />
+      <sidebar />
     <div class="container">
       <table style="width:100%">
               <tr>
@@ -23,6 +24,7 @@
 import navbar from '@/components/navbar.vue'
 import footer from '@/components/footer.vue'
 import axios from 'axios'
+import sidebar from '@/components/sidebar.vue'
 export default {
   name: 'accountdetails',
   data () {
@@ -33,9 +35,14 @@ export default {
   },
   components: {
     navbar: navbar,
-    Footer: footer
+    Footer: footer,
+    sidebar: sidebar
   },
   mounted () {
+    // this.id = localStorage.getItem('user_id')
+    if (localStorage.getItem('user_id') === null) {
+      this.$router.push('/login')
+    }
     this.user_id = localStorage.getItem('user_id')
     axios.get('http://10.177.68.42:8082/account/' + this.user_id).then((result) => {
       console.log(result)
@@ -57,19 +64,21 @@ export default {
 <style>
 .container {
   border: 10px solid #f1f1f1;
-  width: 40%;
+  width: 30%;
   align-content: center;
   justify-items: center;
+  margin:auto;
   margin-top:140px;
-  margin-left:350px;
-  margin-bottom: 100px;
+  /* margin-left:350px;
+  margin-bottom: 100px; */
   padding: 16px;
   display:flex;
   flex-direction: column;
   justify-content: space-evenly;
   align-items: center;
-  color: black;
-  background-color: silver;
+  opacity:0.8;
+  background-color: rgb(192, 175, 192);
+  border-radius: 10px;
 }
 input[type=text], input[type=password],input[type=email] {
   width: 50%;
