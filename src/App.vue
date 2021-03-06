@@ -17,7 +17,7 @@ body {
   background-image:url('https://image.freepik.com/free-photo/hand-putting-money-coin-into-piggy-bank-isolated-grey-background-property-investment-house-mortgage-financial-concept_207927-188.jpg');
   background-repeat: no-repeat;
   background-size: cover;
-  font-family: 'Roboto', sans-serif;
+  font-family: 'Vollkorn', serif;
   font-size: 15px;
 // font-family: 'Roboto', sans-serif;
 }

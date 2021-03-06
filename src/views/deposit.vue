@@ -161,5 +161,6 @@ button:hover {
   width: auto;
   padding: 10px 18px;
   background-color: #5085A5;
+  font-family: 'Vollkorn', serif;
 }
 </style>

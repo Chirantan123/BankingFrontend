@@ -79,48 +79,6 @@ export default {
 </script>
 
 <style scoped>
-/* form {
- height:200px;
- width: 50%;
- margin-top:100px;
- background-color:white;
-} */
-/*
-form {
- margin-top:250px;
- display: inline-block;
-}
-.position {
- margin: 50px;
- margin-bottom:5px;
-}
-.position2 {
- margin:50px;
- margin-top:5px;
- margin-right:70px;
-}
-form {
- height:200px;
- width: 40%;
- margin-top:100px;
- background-color:white;
- border:5px solid blue;
-} */
-/* .container {
- margin: auto;
- max-width: 500px;
- padding: 20px;
- background-color: white;
-} */
-/* form {
-  text-align: center;
-  border: 10px solid #f1f1f1;
-  width: 50%;
-  align-content: center;
-  justify-content: center;
-  margin-top:140px;
-  margin-left:350px;
-} */
 input[type=text], input[type=password],input[type=email] {
   width: 50%;
   padding: 12px 20px;

@@ -42,9 +42,9 @@ export default {
     sidebar: sidebar
   },
   mounted () {
-    // if (localStorage.getItem('user_id') === null) {
-    //   this.$router.push('/login')
-    // }
+    if (localStorage.getItem('jwt') === null) {
+      this.$router.push('/login')
+    }
   },
   methods: {
     validate (r) {
@@ -149,5 +149,6 @@ button:hover {
   width: auto;
   padding: 10px 18px;
   background-color: #5085A5;
+  font-family: 'Vollkorn', serif;
 }
 </style>

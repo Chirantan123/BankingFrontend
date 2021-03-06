@@ -10,7 +10,7 @@
  <input type='text' v-model='accountNo' id='AccountNo'>
  <!-- <label for="From">Pin</label>
  <input type='password' v-model='pin' id='password'> -->
- <button type="submit" class="submitbtn" @click="doWithdraw">Submit</button>
+ <button type="submit" class="submitbtn" @click="doWithdraw">Withdraw</button>
  </div>
  <Footer />
 </div>
@@ -77,20 +77,14 @@ export default {
               console.log(result)
               this.results = result.data
               // validation of result
-              if (this.validate(this.results) === 'Success') {
+              var c = this.validate(this.results)
+              if (c === 'Success') {
                 this.$alert(' Your Transaction was Successful!! ' + '  Your current Balance is  ' + this.results.currentBalance + '\n')
                 this.$router.push('/welcome')
               } else {
-                this.$alert('Re Enter Your Details')
+                this.$alert(c)
                 // Show that the account no to which money is being transferred does not exist and stay in the same page
               }
-
-              // console.log(this.validate(this.results))
-              // Show withdraw details,Success message and redirect to welcome page
-              // Show that the account no to which money is being transferred does not exist and stay in the same page
-
-              // this.$router.push({ name: 'Welcome' })
-              // localStorage.setItem('email', this.posts.email)
             })
             .catch(e => console.log(e))
         })
@@ -133,5 +127,6 @@ button:hover {
   width: auto;
   padding: 10px 18px;
   background-color: #5085A5;
+  font-family: 'Vollkorn', serif;
 }
 </style>

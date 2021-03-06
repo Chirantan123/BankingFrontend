@@ -28,10 +28,8 @@
     <button class="submitbtn" v-on:click="createAccount">Create Account</button>
 </div>
 <span>
-
 </span>
 <marquee class="heading" behaviour="scroll" direction="right">Welcome to Quinpay - Connecting all your banking needs.</marquee>
-
 <Footer />
 </div>
 </template>
@@ -55,11 +53,12 @@ export default {
     Footer: footer,
     sidebar: sidebar
   },
-  //   mounted () {
-  //     this.id = localStorage.getItem('jwt')
-  //     if (localStorage.getItem('jwt') === null) {
-  //       this.$router.push('/login')
-  //     }
+  mounted () {
+    this.id = localStorage.getItem('jwt')
+    if (localStorage.getItem('jwt') === null) {
+      this.$router.push('/login')
+    }
+  },
   // this.email = localStorage.getItem('email')
   // axios.get('http://10.177.68.51:9090/login-as-admin ', ob)
   // .then((res) => {
@@ -150,7 +149,7 @@ export default {
 .heading {
   position:fixed;
  margin-top: 500px;
- margin-bottom:70px;
+ margin-bottom:100px;
  font-size:40px;
  color:#687864;
 }
@@ -166,6 +165,7 @@ export default {
      width: auto;
   padding: 10px 18px;
   background-color: #5085A5;
+  font-family: 'Vollkorn', serif;
 }
 .container {
   border: 10px solid #f1f1f1;

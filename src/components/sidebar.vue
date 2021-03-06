@@ -52,7 +52,7 @@ export default {
   z-index: 2;
   background-color:rgb(120, 207, 248);
   opacity: 0.7;
-  overflow-x: hidden;
+  /* overflow-x: hidden; */
   display:flex;
   flex-direction:column;
   justify-content: space-evenly;
@@ -72,8 +72,9 @@ export default {
   transition: 0.5s;
   background-size: 200% auto;
  text-shadow: 0px 0px 10px rgba(0,0,0,0.2);
-  box-shadow: 0 0 20px #eee;
+  box-shadow: 0 0 10px rgb(10, 12, 15);
   border-radius: 10px;
+  font-family: 'Vollkorn', serif;
  }
 
 /* Demo Stuff End -> */

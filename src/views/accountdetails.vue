@@ -104,7 +104,7 @@ button:hover {
   background-color: #5085A5;
 }
 table {
-  font-family: arial, sans-serif;
+  font-family: 'Vollkorn', serif;
   border-collapse: collapse;
   width: 100%;
 }

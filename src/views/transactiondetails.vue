@@ -3,9 +3,9 @@
   <navbar />
   <sidebar />
     <div class="container">
-        <div class="Search">
-        <input type="text" v-model="transactionType" placeholder ="Search"/>
-        <button @click="Search">Search</button>
+        <div>
+        <input type="text" width="150" v-model="transactionType" placeholder ="Search"/>
+        <button class="Search" @click="Search">Search</button>
         </div>
       <table style="width:100%">
            <tr>
@@ -146,10 +146,15 @@ export default {
 
 <style scoped>
 .Search {
-    display:flex;
+    display:inline-block;
     flex-direction: row;
-    justify-content: space-around;
+    justify-content: space-between;
     border-radius: 20px;
+    font-family: 'Vollkorn', serif;
+}
+.Search:hover {
+    background-color:#5085A5;
+    font-family: 'Vollkorn', serif;
 }
 .container {
   border: 10px solid #f1f1f1;
@@ -170,7 +175,8 @@ export default {
 font-family: 'Roboto', sans-serif;
 }
 table {
-  font-family: arial, sans-serif;
+  font-family: 'Vollkorn', serif;
+  /* font-family: arial, sans-serif; */
   border-collapse: collapse;
   width: 100%;
 }
@@ -187,5 +193,6 @@ button:hover {
   width: auto;
   padding: 10px 18px;
   background-color: #5085A5;
+  font-family: 'Vollkorn', serif;
 }
 </style>
