@@ -85,7 +85,7 @@ export default {
         address: this.address
       }
       if (this.validate()) {
-        axios.post('http://10.177.68.59:8080/register', obj).then((result) => {
+        axios.post('http://10.177.68.59:8080/loginservice/register', obj).then((result) => {
           console.log(result)
           this.$router.push('/login')
         })
@@ -138,7 +138,7 @@ button:hover {
   justify-items: center;
   margin-top:140px;
   margin-left:350px;
-  margin-bottom: 100px;
+  margin-bottom: 150px;
   padding: 16px;
   display:flex;
   flex-direction: column;

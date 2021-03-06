@@ -3,7 +3,10 @@
   <navbar />
   <sidebar />
     <div class="container">
-        <input type="text" v-model="search" placeholder ="Search"/>
+        <div class="Search">
+        <input type="text" v-model="transactionType" placeholder ="Search"/>
+        <button @click="Search">Search</button>
+        </div>
       <table style="width:100%">
            <tr>
                <th>Sr.No</th>
@@ -19,7 +22,7 @@
         <!-- // eslint-disable-next-line vue/no-use-v-if-with-v-for
          v-if = 'index <= 20' -->
         <tr v-for = '(res, index) in results' :key="res.id" >
-      <td>{{index +1}}</td>
+      <td>{{index+1}}</td>
       <td>{{res.user_id}}</td>
       <td>{{res.date}}</td>
       <td v-if= "res.myAccNo === null" >Null</td>
@@ -53,9 +56,10 @@ export default {
   data () {
     return {
       results: [],
-      user_id: '',
+      jwt: '',
       pdf: '',
-      count: 0
+      count: 0,
+      transactionType: ''
     //   details: {
     //     userId: '',
     //     id: '',
@@ -68,11 +72,15 @@ export default {
     }
   },
   mounted () {
-    if (localStorage.getItem('user_id') === null) {
+    if (localStorage.getItem('jwt') === null) {
       this.$router.push('/login')
     }
-    this.user_id = localStorage.getItem('user_id')
-    axios.get('http://10.177.68.42:8082/transaction/pastTransaction/' + this.user_id).then((result) => {
+    this.jwt = localStorage.getItem('jwt')
+    axios.get('http://10.177.68.59:8080/transaction-service/transaction/pastTransaction', {
+      headers: {
+        Authorization: 'Bearer ' + this.jwt
+      }
+    }).then((result) => {
       console.log(result)
       localStorage.setItem('details', result.data)
       this.results = result.data
@@ -85,12 +93,33 @@ export default {
       })
   },
   methods: {
+    Search () {
+      var obj = {
+        transactionType: this.transactionType
+      }
+      axios.post('http://10.177.68.59:8080/transaction-service/transaction/searchTransactionType', obj, {
+        headers: {
+          Authorization: 'Bearer ' + this.jwt
+        }
+      }).then((result) => {
+        console.log(result)
+        localStorage.setItem('details', result.data)
+        this.results = result.data
+      //   this.details = JSON.parse(localStorage.getItem('details'))
+      //   console.log('details fetched')
+      //   console.log(this.details)
+      })
+        .catch((error) => {
+          console.log(error)
+        })
+    },
     generatePdf () {
-      var count = 1
+      var count = 0
       var pdfName = 'transaction'
       let pdf = ''
       pdf = pdf + 'Sr.No' + ' ' + 'Id' + ' ' + 'Date' + ' ' + 'Sender Account Number' + ' ' + 'Reciever Account Number' + ' ' + 'Amount' + ' ' + 'Status' + ' ' + 'Type'
       for (const i in this.results) {
+        console.log(this.results[i])
         const res = this.results[i]
         pdf = pdf + count + '. ' + ' '
         pdf = pdf + '    ' + res.user_id
@@ -116,6 +145,12 @@ export default {
 </script>
 
 <style scoped>
+.Search {
+    display:flex;
+    flex-direction: row;
+    justify-content: space-around;
+    border-radius: 20px;
+}
 .container {
   border: 10px solid #f1f1f1;
   width: 50%;
@@ -131,6 +166,8 @@ export default {
   align-items: center;
   color: black;
   /* background-color: silver; */
+  font-family: 'Akaya Telivigala', cursive;
+font-family: 'Roboto', sans-serif;
 }
 table {
   font-family: arial, sans-serif;

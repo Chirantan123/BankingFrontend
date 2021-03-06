@@ -45,7 +45,7 @@ export default {
 .sidebar {
   position: fixed;
   width: 250px;
-  bottom: 55px;
+  bottom: 105px;
   top: 70px;
   left: 0px;
   /* background-color: white; */

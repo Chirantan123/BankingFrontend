@@ -32,7 +32,7 @@ export default {
       amount: '',
       pin2: '',
       results: '',
-      user_id: '',
+      jwt: '',
       pin: ''
     }
   },
@@ -42,9 +42,9 @@ export default {
     sidebar: sidebar
   },
   mounted () {
-    if (localStorage.getItem('user_id') === null) {
-      this.$router.push('/login')
-    }
+    // if (localStorage.getItem('user_id') === null) {
+    //   this.$router.push('/login')
+    // }
   },
   methods: {
     validate (r) {
@@ -65,7 +65,7 @@ export default {
         pin: ''
         // user_id: localStorage.getItem('user_id')
       }
-      this.user_id = localStorage.getItem('user_id')
+      this.jwt = localStorage.getItem('jwt')
       if (this.amount === '') {
         this.$alert('Enter the Amount')
       } else if (this.senderAccount === '') {
@@ -85,7 +85,11 @@ export default {
           console.log('pinnn' + text)
           obj.pin = text
 
-          axios.put('http://10.177.68.42:8082/transaction/transfer/' + this.user_id, obj)
+          axios.put('http://10.177.68.59:8080/transaction-service/transaction/transfer', obj, {
+            headers: {
+              Authorization: 'Bearer ' + this.jwt
+            }
+          })
             .then((result) => {
               this.results = result.data
               console.log(result)

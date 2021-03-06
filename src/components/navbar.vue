@@ -18,13 +18,13 @@
 export default {
   data () {
     return {
-      state: localStorage.getItem('user_id')
+      state: localStorage.getItem('jwt')
     }
   },
   methods: {
     logout () {
       console.log('Logout called')
-      localStorage.removeItem('user_id')
+      localStorage.removeItem('jwt')
       this.$router.push('/login')
     }
   }

@@ -45,9 +45,9 @@ export default {
   name: 'welcome',
   data () {
     return {
-      id: '',
+      jwt: '',
       uname: '',
-      pin: ''
+      pin: '**'
     }
   },
   components: {
@@ -55,18 +55,18 @@ export default {
     Footer: footer,
     sidebar: sidebar
   },
-  mounted () {
-    this.id = localStorage.getItem('user_id')
-    if (localStorage.getItem('user_id') === null) {
-      this.$router.push('/login')
-    }
-    // this.email = localStorage.getItem('email')
-    // axios.get('http://10.177.68.51:9090/login-as-admin ', ob)
-    // .then((res) => {
-    // this.id = res.data.email
-    // })
-    console.log(this.id)
-  },
+  //   mounted () {
+  //     this.id = localStorage.getItem('jwt')
+  //     if (localStorage.getItem('jwt') === null) {
+  //       this.$router.push('/login')
+  //     }
+  // this.email = localStorage.getItem('email')
+  // axios.get('http://10.177.68.51:9090/login-as-admin ', ob)
+  // .then((res) => {
+  // this.id = res.data.email
+  // })
+  //     console.log(this.jwt)
+  //   },
   methods: {
     // deposit () {
     //   this.$router.push('/deposit')
@@ -84,29 +84,48 @@ export default {
     //   this.$router.push('/accountdetails')
     // },
     createAccount () {
-      this.$alert('Are You Sure ?', 'For creating an account you are required to set a PIN', 'question')
-      setTimeout(2000)
+      this.$alert('Are You Sure ? For creating an account you are required to set a PIN')
+      // setTimeout(2000)
       this.$prompt('Please Create Your Secret PIN').then((text) => {
         // do somthing with text
         this.pin = text
+        var obj = {
+          pin: this.pin
+        }
+        // eslint-disable-next-line valid-typeof
+        if (typeof (obj.pin) == null) {
+          console.log(obj.pin)
+          alert('Please Enter the PIN')
+        } else {
+          this.jwt = localStorage.getItem('jwt')
+          axios.post('http://10.177.68.59:8080/transaction-service/account/createAccount', obj, {
+            headers: {
+              Authorization: 'Bearer ' + this.jwt
+            }
+          }).then((result) => {
+            console.log(result)
+            this.results = result.data
+            console.log(this.results.message)
+            if (this.results.message === 'Account created Successfully') {
+              // Show withdraw details,Success message and redirect to welcome page
+              this.$alert('Account Created Successfully!!')
+              this.$alert('Account has been created !!' + '\n' + 'Your Current Balance is: ' + this.results.accountBalance + ' Your Account Number is: ' + this.results.accountNo)
+              this.$router.push({ name: 'welcome' })
+            } else {
+              // console.log(this.results)
+              // this.$alert('Pin NOT set')
+              // Show that the account no to which money is being transferred does not exist and stay in the same page
+            }
+          // this.$alert('Account has been created' + '\n' + 'CurrentBalance' + this.results.accountBalance)
+          //   this.details = JSON.parse(localStorage.getItem('details'))
+          //   console.log('details fetched')
+          //   console.log(this.details)
+          })
+            .catch((error) => {
+              console.log(error)
+            })
+        }
       })
-
-      var obj = {
-        pin: this.pin
-      }
-      this.pin = parseInt(this.pin)
-      axios.post('http://10.177.68.42:8082/account/createAccount/' + this.id, obj).then((result) => {
-        console.log(result)
-        //   localStorage.setItem('details', result.data)
-        this.results = result.data
-        alert('Account has been created' + '\n' + 'CurrentBalance' + this.results.accountBalance)
-      //   this.details = JSON.parse(localStorage.getItem('details'))
-      //   console.log('details fetched')
-      //   console.log(this.details)
-      })
-        .catch((error) => {
-          console.log(error)
-        })
     }
   }
 }

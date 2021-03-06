@@ -55,7 +55,7 @@ export default {
       pin: '',
       accountNo: '',
       amount: '',
-      user_id: '',
+      jwt: '',
       results: [],
       pin2: ''
     }
@@ -66,7 +66,7 @@ export default {
     sidebar: sidebar
   },
   mounted () {
-    if (localStorage.getItem('user_id') === null) {
+    if (localStorage.getItem('jwt') === null) {
       this.$router.push('/login')
     }
   },
@@ -97,8 +97,13 @@ export default {
         this.$prompt('Input your Secret PIN').then((text) => {
         // do somthing with text
           obj.pin = text
-          this.user_id = localStorage.getItem('user_id')
-          axios.put('http://10.177.68.42:8082/transaction/deposit/6', obj)
+          this.jwt = localStorage.getItem('jwt')
+          console.log(this.jwt)
+          axios.put('http://10.177.68.59:8080/transaction-service/transaction/deposit', obj, {
+            headers: {
+              Authorization: 'Bearer ' + this.jwt
+            }
+          })
             .then((result) => {
               console.log(result)
               this.results = result.data

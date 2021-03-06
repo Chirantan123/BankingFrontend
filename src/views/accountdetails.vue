@@ -5,12 +5,12 @@
     <div class="container">
       <table style="width:100%">
               <tr>
-            <th>Id</th>
+            <th>Sr.No.</th>
             <th>Account Number</th>
             <th>Account Balance</th>
         </tr>
-        <tr v-for = 'res in results' :key="res.id">
-      <td>{{res.id}}</td>
+        <tr v-for = '(res, index) in results' :key="res.id">
+      <td>{{index+1}}</td>
       <td>{{res.accountNo}}</td>
       <td>{{res.accountBalance}}</td>
       </tr>
@@ -29,7 +29,7 @@ export default {
   name: 'accountdetails',
   data () {
     return {
-      user_id: '',
+      jwt: '',
       results: []
     }
   },
@@ -39,12 +39,18 @@ export default {
     sidebar: sidebar
   },
   mounted () {
-    // this.id = localStorage.getItem('user_id')
-    if (localStorage.getItem('user_id') === null) {
+    // this.jwt = localStorage.getItem('jwt')
+    if (localStorage.getItem('jwt') === null) {
       this.$router.push('/login')
     }
-    this.user_id = localStorage.getItem('user_id')
-    axios.get('http://10.177.68.42:8082/account/' + this.user_id).then((result) => {
+    this.jwt = localStorage.getItem('jwt')
+    axios.get('http://10.177.68.59:8080/transaction-service/account/getAccounts', {
+      headers: {
+        Authorization: 'Bearer ' + this.jwt
+        // 'Access-Control-Allow-Origin': '*', // Required for CORS support to work
+        // 'Access-Control-Allow-Credentials': true
+      }
+    }).then((result) => {
       console.log(result)
       console.log('success')
       //   localStorage.setItem('details', result.data)
@@ -79,6 +85,7 @@ export default {
   opacity:0.8;
   background-color: rgb(192, 175, 192);
   border-radius: 10px;
+  font-style: Arial;
 }
 input[type=text], input[type=password],input[type=email] {
   width: 50%;

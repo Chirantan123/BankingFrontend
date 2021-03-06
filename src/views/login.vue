@@ -54,12 +54,11 @@ export default {
       if (this.validate()) {
         // localStorage.setItem('email', this.email)
         console.log('Redirect')
-        axios.post('http://10.177.68.59:8080/login', obj).then((result) => {
+        axios.post('http://10.177.68.59:8080/loginservice/login', obj).then((result) => {
           console.log(result)
           if (result.data.message === 'Success') {
             console.log('Success')
             localStorage.setItem('jwt', result.data.jwt)
-            console.log(localStorage.getItem('jwt'))
             this.$alert('You are successfully logged in')
             this.$router.push('/welcome')
           } else if (result.data.message === 'Incorrect password') {

@@ -1,7 +1,8 @@
 <template>
   <div>
       <footer>
-          <p>Mini Online Banking System<br></p>
+          <p>Pay with Quinpay<br></p>
+          <img height="50"  width="50" src="@/assets/mylogo.jpg">
       </footer>
   </div>
 </template>
