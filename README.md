@@ -1,5 +1,5 @@
 # BankingFrontend
-frontend of online mini banking system
+frontend of mini online banking system
 
 # Home page
 ![alt text](https://github.com/Chirantan123/BankingFrontend/blob/master/homePage.png?raw=true)
