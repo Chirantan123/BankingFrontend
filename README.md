@@ -1,16 +1,16 @@
 # BankingFrontend
 frontend of online mini banking system
 
-# Homepage
+# Home page
 ![alt text](https://github.com/Chirantan123/BankingFrontend/blob/master/homePage.png?raw=true)
 
-# Loginpage
+# Login page
 ![alt text](https://github.com/Chirantan123/BankingFrontend/blob/master/loginPage.png?raw=true)
 
-# Registrationpage
+# Registration page
 ![alt text](https://github.com/Chirantan123/BankingFrontend/blob/master/registrationPage.png?raw=true)
 
-# pastTransactionsPage
+# pastTransactions page
 ![alt text](https://github.com/Chirantan123/BankingFrontend/blob/master/pastTransactionsPage.png?raw=true)
 
 # pdfFeature
