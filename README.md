@@ -1,4 +1,4 @@
-# BankingFrontend
+# Banking Frontend
 frontend of mini online banking system
 
 # Home page
@@ -13,7 +13,7 @@ frontend of mini online banking system
 # pastTransactions page
 ![alt text](https://github.com/Chirantan123/BankingFrontend/blob/master/pastTransactionsPage.png?raw=true)
 
-# pdfFeature
+# pdfeature
 ![alt text](https://github.com/Chirantan123/BankingFrontend/blob/master/pdfFeature.png?raw=true)
 
 
